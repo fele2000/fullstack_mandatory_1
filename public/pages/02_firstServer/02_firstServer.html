@@ -1,0 +1,123 @@
+<h1>02. First Server</h1>
+
+<h2 id="Scoping-in-JS">
+  Understand scoping in Javascript and know to always use const if you can get
+  away with it otherwise let.
+</h2>
+<p style="margin-bottom: 5rem">
+  Scoping handler om hvor din kode ligger henne, og hvilken kode der kan tilgå
+  andet kode f.eks. er der global scope i en fil, det er det øverste lag, hvor
+  alt andet kode i den fil kan tilgå hvad end det er, men hvis en const f.eks.
+  er defineret inde i en funktion så kan den ikke tilgås udenfor den funktion
+  <br />
+  Det er godt at bruge const som udgangspunkt, da man f.eks. kan undgå side
+  effects, den er nemmere for andre folk at forstå at den her ting skal ikke
+  ændres + det er vist mere optimalt for koden.
+</p>
+
+<h2 id="functions-in-JS">
+  Understand advanced things about functions in JavaScript.
+</h2>
+<p>
+  Funktioner er first-class citizens i JS. De er værdier der kan gemmes i
+  variabler, som så meget andet i JS.
+</p>
+<pre style="margin-bottom: 5rem"><code>
+// 1. Declaration (Hoisting, kan blive kaldt tidligere i koden)
+function addDeclaration(a, b) {
+  return a + b
+}
+
+// 2. Expression (en funktion gemt i en variabel)
+const addExpression = function (a, b) {
+  return a + b
+};
+
+// 3. Arrow function (anonym funktion)
+const add = (a, b) => a + b
+</code></pre>
+
+<h2 id="callback-function">
+  Can write callback functions with different syntax.
+</h2>
+<p>Et par eksempler</p>
+<pre style="margin-bottom: 5rem"><code>
+setTimeout(() => {
+  console.log("3 sekunder er gået");
+}, 3000);
+
+function sendFrontpage(req, res) {
+  res.send(frontpagePage);
+}
+app.get("/", sendFrontpage);
+
+numbers.map(num => num * 2);
+</code></pre>
+
+<h2 id="NPM-manager">
+  Understands the function of NPM and can compare it with other package
+  managers.
+</h2>
+<p style="margin-bottom: 5rem">
+  Den henter pakker fra NPM registry og holder styr på projektets afhængigheder
+  i package.json. og den låser versioner i package-lock.json, alt sammen rimelig
+  seamless og automatisk. NPM henter per projekt, så 2 projekter kan have
+  forskellige express versioner osv. Den eneste anden jeg kan husker pip for
+  python, hvor man skal lave sin egen .venv osv. tager mig altid lidt tid..
+</p>
+
+<h2 id="package.json">
+  Understands the different purposes of package.json and can set it up by hand.
+</h2>
+<p>
+  package.json indeholder meta data om de packages, dependencies, scripts osv.
+  vi har i projektet. <br />Lille eksempel med scripts og dependencies.
+</p>
+<pre style="margin-bottom: 5rem"><code>
+  {
+    "scripts" {
+      "command-alias": "actual command"
+    }
+    "dependencies" {
+      "dependency": "version"
+    }
+  }
+</code></pre>
+
+<h2 id="Node_modules">
+  Understands what node_modules are and why they shouldn’t be pushed.
+</h2>
+<p style="margin-bottom: 5rem">
+  Alle de node pakker vi bruger i projektet, som ofte bare er dem vi får at npm
+  install express. Den kan være virkelig stor og er bare waste i ens github, da
+  man alligevel kan genskabe den fra package.json og package-lock.json.
+</p>
+
+<h2 id="Express-server">Can create a server with Express from memory.</h2>
+<pre style="margin-bottom: 5rem"><code>
+import express from "express"
+
+app = express();
+
+app.use(express.json());
+// eller
+app.use(express.static("public"))
+</code></pre>
+
+<h2 id="Client-/-Server">Can explain the client-server model.</h2>
+<p style="margin-bottom: 5rem">
+  Client laver requests, server giver responds tilbage. Vores gamle lærer fra 1.
+  semester forklarede det som en tjener i en restaurant. Du, som en besøgende
+  sender en request med tjeneren til køkkenet, og tjeneren kommer tilbage med en
+  request fra køkkenet, hvor køkkenet er serveren.
+</p>
+
+<h2 id="HTTP-GET">
+  Understands how to send data with GET requests over HTTP and knows how to do
+  it in Express.
+</h2>
+<pre><code>
+  app.get("/path/:variable", (req, res) => {
+    res.send({ data: `This: ${req.params.variable} is your path variable`})
+  })
+</code></pre>

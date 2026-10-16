@@ -1,0 +1,124 @@
+<h1>03. Loop Methods</h1>
+
+<h2 id="Nodemon">
+  Understands the use case for Nodemon and its limitation to development.
+</h2>
+<p style="margin-bottom: 5rem">
+  Nodemon er tænkt specifikt til udvikling. Den gør det dejligt nemt og hurtigt
+  at teste ting i sin app, man slipper for manuelt at skulle genstarte sin
+  server hele tiden, fordi nodemon gør det automatisk, alt efter hvad du har
+  sagt den skal holde øje med. <br />Den skal ikke bruges i produktion da
+  automatisk genstart på den måde kunne skabe uforudsete problemer
+</p>
+
+<h2 id="Loop-methods">
+  Can use loop methods (+map, +filter, %reduce). Can choose the right one at the
+  appropriate time:
+</h2>
+<p>
+  Map når du gerne vil kalde en funktion på hvert element, og få et nyt array
+  med præcis lige så mange elementer, som elementer i det originale array.
+</p>
+<pre style="margin-bottom: 2rem"><code>
+const numbers = [65, 44, 12, 4];
+const newArr = numbers.map(myFunction)
+
+function myFunction(num) {
+  return num * 10;
+}
+// newArr = [650, 440, 120, 40]
+</code></pre>
+
+<p>
+  Filter når du gerne vil have et nyt array fyldt af elementer fra det originale
+  array, som har bestået den test du har set
+</p>
+<pre style="margin-bottom: 2rem"><code>
+  const numbers = [65, 44, 12, 4]
+  const newArr = numbers.filter((num) => return num >= 40)
+  // newArr = [65, 44]
+</code></pre>
+
+<p>
+  Reduce når du gerne vil bruge alt i arrayet til at få en enkelt værdi det
+  kunne f.eks. være summen af alle tallene i et array, eller gennemsnit.
+</p>
+<pre style="margin-bottom: 5rem"><code>
+  const numbers = [65, 44, 12, 4]
+  const numbersTotalSum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue)
+  // numbersTotalSum = 125
+</code></pre>
+
+<h2 id="Functional-approach">
+  Understands why a functional approach to loops is to be preferred and how to
+  implement it without side effects.
+</h2>
+<p>
+  Den funktionelle måde at gøre det på, betyder at vi gør det deklarativt, at vi
+  beskriver hvad vi gerne vil have og undgår at skrive løkker selv, så vi ikke
+  lige pludselig har et while loop uden exit condition i prod. <br />
+  Det er også mere læsbart for mennesker, man kan godt gennemskue hvad .filter
+  gør f.eks.
+</p>
+<pre><code>
+  const numbers = [65, 44, 12, 4]
+  // Imperativt: du styrer løkken helt selv, hvor lang tid den skal køre, hvornår den stopper osv.
+const doubled = [];
+for (let i = 0; i < numbers.length; i++) {
+  doubled.push(numbers[i] * 2);
+}
+
+// Funktionelt: du beskriver bare den ændring du gerne vil have
+const doubled = numbers.map((num) => num * 2);
+</code></pre>
+<p style="margin-bottom: 5rem">
+  Man undgår side effects ved at sikre sig at sine loops ikke ændrer noget uden
+  for sig selv. Det kunne f.eks. være som mit imperative loop deroppe, som
+  ændrer på doubled der ligger uden for loopet.
+</p>
+
+<h2 id="URL-terminology">
+  Can use the right terminology when it comes to the different parts of an URL.
+</h2>
+<img
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNb67Z9dgF_FwJKvTQ2a-RXGsik_1h9T9z-SmmiXngrmHtdx9LKv778-p8&s=10"
+  alt="URL Anatomy Image"
+/>
+<p style="margin-bottom: 5rem">Den mangler lige .com som top level domain</p>
+
+<h2 id="POST-request">
+  Can make a POST request and parse the body in Express.
+</h2>
+<pre><code>
+  app.post ("/numbers", (req, res) => {
+    const providedNumber = req.body 
+
+    numbers.push(providedNumber)
+    
+    res.send({ data: providedNumber })
+  })
+</code></pre>
+
+<h2 id="Cross-site-scripting">
+  Understand the dangers of XSS and how to prevent it in frontend (avoiding
+  innnerHTML) and backend (sanitizing).
+</h2>
+<p>
+  Vi fik f.eks. vist hvordan man kunne parse JavaScript i andres browser ved at
+  man med vilje lavede faulty img tags, som på error så kørte simpelt JS,
+  hvilket ikke er helt optimalt, ville nogle mene. <br />
+  I frontend kan man vælge f.eks. at burge textContent i stedet for, men den
+  helt smarte er at bruge escapeHTML, som i mit projekt f.eks.
+</p>
+<pre><code>
+  export function sanitizeXSS(string) {
+    return string
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
+        .replaceAll('`', '&#x60;')
+        .replaceAll('/', '&#x2F;');
+}
+</code></pre>

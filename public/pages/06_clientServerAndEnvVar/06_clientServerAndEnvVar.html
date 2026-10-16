@@ -1,0 +1,109 @@
+<h1>06. Client vs. Server / Environment Variables</h1>
+
+<h2 id="Ways-to-redirect">
+  Can recount the number of ways and approaches to redirection.
+</h2>
+<p>Af hvad jeg kan huske så har vi gennemgået:</p>
+<pre><code>
+<!-- meta-tag redirection -->
+<meta http-equiv="refresh" content="3;/"/>
+
+<!-- anchor-tag  -->
+<a href="/">Interested in torture?</a>
+
+<!-- dynamic redirection -->
+window.location.href = "/";
+location.href = "/";
+location.replace('/');
+
+<!-- server side redirect express-->
+app.get("/", (req, res) => {
+  res.redirect("/");
+});
+</code></pre>
+<p style="margin-bottom: 5rem">
+  De 3 første er alle client side. Replace erstatter din nuværende page så du
+  mister historikken. Meta redirect sker automatisk af hvad jeg husker, når
+  brugeren har hentet HTML'en, og man kan sætte en timer på så det sker efter X
+  sekunder.
+</p>
+
+<h2 id="CS-vs-SS-redirect">
+  Understands the difference between client-side redirection and server-side.
+</h2>
+<p>
+  Server side er hurtigst da brugeren ikke først skal hente alt dataen fra en
+  side før de bliver redirected. <br />
+  Du har til gengæld lidt mere kontrol i client side redirect, det kan være på
+  baggrund af brugerhandlinger og du kan sætte en timer på, ligesom setTimeout
+  eller meta tag. <br />
+  SEO foretrækker server side redirect da søgemaskinerne forstår dem lidt bedre.
+</p>
+
+<h2 id="NPM">Can define and run scripts with NPM.</h2>
+<p>Det øverste er fra min package.json</p>
+<pre><code>
+"scripts": {
+  "start": "cross-env PORT=80 node app.js",
+  "start-dev": "cross-env PORT=9090 nodemon app.js"
+},
+
+npm run start
+npm run start-dev
+</code></pre>
+<p style="margin-bottom: 5rem">
+  De 2 nederste ting er noget man egentlig skriver i terminalen, men det kom
+  lige med her.
+</p>
+
+<h2 id="Env-variables">
+  Know how to define environment variables natively in Node.js
+</h2>
+<p>
+  Kan ikke huske om vi havde flere metoder, den eneste jeg lige kunne fiske mig
+  frem til var (WINDOWS):
+</p>
+<pre style="margin-bottom: 5rem"><code>
+  $env:VAR="VALUE"; node. app.js 
+  $env:PORT="9090"; node app.js 
+</code></pre>
+
+<h2 id="Semantic-HTML">Structuring HTML with semantic HTML.</h2>
+<p>
+  Det handler om at bruge tags som giver mening og er beskrivende for hvad det
+  er i koden. Eksempelvis er div's meget populære men det siger ikke rigtig
+  noget om hvad det er, medmindre man giver dem ID's er lignende. En nav siger
+  lidt mere som udgangspunkt om hvad funktionen for denne del er. <br />
+  Et andet eksempel er f.eks. h1 ... hX til titler, undertitler osv. osv.
+</p>
+
+<h2 id="Style-Footer">
+  Knows at least one way to style a footer so that it appears at the bottom,
+  always.
+</h2>
+<p>
+  Som udgangspunkt er footeren altid i bunden på min hjemmeside pga. den måde
+  jeg bygger mine pages i templating, hvor footer kommer til sidst. Hvis jeg
+  derimod gerne ville "pin" footeren i bunden af skærmen, burde det her meget
+  gerne virke:
+</p>
+<pre style="margin-bottom: 5rem"><code>
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+</code></pre>
+
+<h2 id="Structure-frontend">
+  Can argue for a better way to structure the frontend (assets, pages).
+</h2>
+<p>
+  I mit hoved handler det meget om separation of concerns og overskuelighed. Del
+  gerne tingene op, så der ikke er wasteful kode. Hvis du har CSS som kun er til
+  frontpage.html, så lad vær med at lig det i root-mappen, men lig det i en
+  mappe sammen med frontpage.html i en frontpage mappe. Sådan kan man tænke med
+  flere ting, header og footer bruges på alle pages? Så lig dem i en components
+  mappe. Det handler om best practice etc.
+</p>

@@ -1,0 +1,58 @@
+<h1>04. HTML / Time</h1>
+
+<h2 id="CRUD-REST-API">
+  Can create a full CRUDable REST API that follows conventions.
+</h2>
+<pre style="margin-bottom: 5rem"><code>
+app.get(/animals, (req, res) => {
+  res.send({ data: animals })
+}
+
+app.get(/animals/:id, (req, res) => {
+// Funktion der tjekker om animal eksistere og returnere den hvis true
+  res.send({ data: foundAnimals })
+}
+
+app.post("/animals", (req, res) => {
+// Funktion der finder nyt animal i req.body og skubber til array
+  res.send({ data: postAnimal })
+});
+
+app.put("/animals/:id", (req, res) => {
+// Funktion der først tjekker om animal eksistere på ID og så ellers
+// det samme som post, bortset fra du erstatter ALT på id i stedet for at skubbe ny
+  res.send({ data: patchAnimal });
+});
+
+app.patch("/animals/:id", (req, res) => {
+// Funktion der først tjekker om animal eksistere på ID og så ellers
+// det samme som post, bortset fra du erstatter DELVIST på id i stedet for at skubbe ny
+  res.send({ data: patchAnimal });
+});
+
+app.delete(/animals/:id, (req, res) => {
+// Funktion der først tjekker om animal eksistere på ID og så ellers
+// sletter det givne animal udfra dens ID
+  res.status(204).send()
+}
+</code></pre>
+
+<h2 id="fetch-request">Can write a fetch request without hesitation.</h2>
+<p>
+  Hvad du vil hente -> lav det til json -> funktionen du faktisk vil køre på det
+  du hentede.
+</p>
+<pre style="margin-bottom: 5rem"><code>
+fetch(path)
+.then((response) => response.json) 
+.then((result) => {})
+</code></pre>
+
+<h2 id="JS-Date">Can get the Date in Javascript.</h2>
+<pre style="margin-bottom: 5rem"><code>
+// UTC
+console.log(new Date()) 
+
+// Local Time
+console.log(Date())
+</code></pre>

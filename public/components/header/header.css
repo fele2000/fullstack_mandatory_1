@@ -1,0 +1,40 @@
+/* DISCLAIMER*/
+/* Google AI oversigt viste nogle af de der variabler, dem tager jeg ikke credit for
+   Det er variabler som er en del af water.css, så navbaren bl.a. følger light/dark mode */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav a {
+  text-decoration: none;
+  color: var(--text-main);
+}
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--links);
+}
+#site-name {
+  font-weight: 700;
+}
+
+.indholdsfortegnelse {
+  position: fixed;
+  top: 7rem;
+  left: 5rem;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+}

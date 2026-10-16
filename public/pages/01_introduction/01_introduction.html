@@ -1,0 +1,92 @@
+<h1>01. Introduction</h1>
+
+<h2 id="Clean-code">
+  While using a linter is not a requirement, having clean code is.
+</h2>
+<p style="margin-bottom: 5rem">
+  Kig igennem min kode, tjek om det er up to snuff
+</p>
+
+<h2 id="Git-terminal">Can work with Git in the terminal.</h2>
+<pre style="margin-bottom: 5rem"><code>
+// Clone existing repo
+git clone (URL)
+
+// Add all untracked files and unstaged changes
+git add . 
+
+// Make a commit with commit message
+git commit -m "message"
+
+// Switch branch or switch to new branch
+git checkout (name)
+git checkout -b (name)
+
+// Fetch changes without merging anything into local branches
+git fetch origin main 
+
+// Fetch changes and then merge them into specific or current branch
+git pull origin main 
+git pull
+</code></pre>
+
+<h2 id="Data-types">Understand and work with data types in JavaScript.</h2>
+<p style="margin-bottom: 5rem">
+  Man skal vide noget om hvordan man bruger de forskellige data typer, hvis man
+  f.eks. prøver at køre en Math.random() på en string så fungerer det ikke.
+  <br />
+  Der er også ting som en lille håndfuld af ting som altid er falsy i js, som
+  f.eks. "", NaN, undefined, null, false, 0. <br />
+  Der er også mutable vs immutable e.g. const vs let eksempelvis.
+</p>
+
+<h2 id="Node.js">Can explain what Node.js is and how to run files with it.</h2>
+<p style="margin-bottom: 5rem">
+  Fra Node.js' egen hjemmeside: "an asynchronous event-driven JavaScript
+  runtime" vi kører det igennem terminalen via enten node app.js eller nodemon
+  app.js
+</p>
+
+<h2 id="Existing-data-types-JS">
+  Knows the existing data types in JavaScript and can work with them.
+</h2>
+<p style="margin-bottom: 5rem">
+  - Number: A number representing a numeric value <br />
+  - Bigint: A number representing a large integer <br />
+  - String: A text of characters enclosed in quotes <br />
+  - Boolean: A data type representing true or false <br />
+  - Undefined: A variable with no assigned value <br />
+  - Null: A value representing object absence <br />
+  - Object: A collection of key-value pairs of data <br />
+</p>
+
+<h2 id="Type-coercion">
+  Understands type coercion and strategies to avoid it.
+</h2>
+<p>
+  Det er når JavaScript skal have det lidt sjovt og vælge om noget er en string
+  eller number, som eksempler. <br />
+  Der er, så vidt jeg kunne finde ud af, visse "regler" for hvordan den gør det,
+  men det er ikke rigtig noget man bare sådan lige kan vide og huske udenvidere.
+</p>
+<pre><code>
+//Eksempler
+"5" + 7 = "57"
+
+"5" - 7 = -2
+</code></pre>
+<p style="margin-bottom: 5rem">
+  Det er altså derfor vigtigt at være præcis med sine typer, og muligvis enforce
+  bestemte datatyper i sin kode, ved f.eks. .stringify eller Number(value)
+</p>
+
+<h2 id="REST-API">Can design a REST API.</h2>
+<p style="margin-bottom: 5rem">Se <a href="/04_html_time">HTML & Time</a></p>
+
+<h2 id="REST-conventions">Knows the three REST conventions we follow:</h2>
+<p>Se <a href="/04_html_time">HTML & Time</a></p>
+<ul>
+  <li>Using the right HTTP verb.</li>
+  <li>Ordering.</li>
+  <li>Naming (noun, plural) that maps to collections in your system.</li>
+</ul>

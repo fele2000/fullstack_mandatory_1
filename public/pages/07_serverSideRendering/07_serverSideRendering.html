@@ -1,0 +1,206 @@
+<h1>07. Server-side Rendering (SSR) / Routers</h1>
+
+<h2 id="CDN-vs-local">
+  Can argue for the pros and cons of CDN vs. serving content locally.
+</h2>
+
+<h3>CDN</h3>
+<h4>Pros:</h4>
+<ul>
+  <li>
+    Det kan hjælpe med at reducere 'load' på din server, så du kan spare noget
+    bandwidth.
+  </li>
+
+  <li>
+    Det er nemt bare at importere fra et library, eksempelvis slipper jeg for en
+    ekstra mappe i mit workspace pga. jeg bare har importeret water.css, så mit
+    workspace ser lidt mere clean ud i mit VS Code
+  </li>
+
+  <li>
+    Det kan hjælpe på latency på et større geografisk niveau, hvis jeg nu har en
+    bruger i Bangladesh, så tager det langt tid for kommunikation mellem
+    client-server pga. jeg kun har min ene server i Danmark, hvis jeg nu havde
+    et CDN så har de servere spredt ud over det hele, formodentlig.
+  </li>
+</ul>
+
+<h4>Cons:</h4>
+<ul>
+  <li>
+    Man gør sig selv afhængig af en tredjepart, min hjemmeside kommer til at se
+    forfærdelig ud hvis water.css serveren går ned. Surely holder den 🙏
+  </li>
+
+  <li>
+    Der kan være nogle privatlivsproblemer f.eks. ift. GDPR, tror vist nok
+    brugerens IP-adresse bliver sendt med rundt når brugeren besøger min side,
+    f.eks. når de skal hente water.css.
+  </li>
+</ul>
+
+<h3>Local</h3>
+<h4>Pros:</h4>
+<ul>
+  <li>
+    Man har fuld kontrol over hvilken version man har, så ens app ikke lige
+    pludselig stopper med at fungere pga. tredjeparten ændrede et eller andet.
+    Man kan selvfølgelig også vælge at låse versionen i den URL man henter fra,
+    men så risikerer man modsat at sin version måske ikke bliver understøttet
+    længere.
+  </li>
+
+  <li>Virker offline for development/test formål</li>
+</ul>
+
+<h4>Cons:</h4>
+<ul>
+  <li>Man står selv for at holde styr på opdateringer og versionering.</li>
+  <li>
+    Min server kan være geografisk virkelig langt væk fra brugeren, som skaber
+    latency
+  </li>
+  <li>
+    Ens server kan bliver overbelastet, hvis den skal stå for at servere alt
+    selv
+  </li>
+</ul>
+
+<h3>Konklusion</h3>
+<p style="margin-bottom: 5rem">
+  Jeg ville nok gøre mest brug af CDN i den forstand i at jeg ville hente
+  eksterne biblioteker. Dette synes jeg giver mest mening i små skoleprojekter,
+  da jeg hverken skal tænke over GDPR, kunder eller noget andet der er afhængigt
+  af min app, hvis tredjeparterne i min app crasher, så har det ikke rigtig
+  nogle andre konsekvenser end at jeg bare lige skal ind og fikse det. Hvis jeg
+  til gengæld stod for noget som en bank f.eks. så ville jeg nok holde så meget
+  som muligt lokalt, både pga. sikkerhed (f.eks. GDPR), men også for server
+  uptime, i den forstand at din uptime kommer til at være afhængig af dine
+  tredjeparters uptime. Tænker næsten at en blanding af begge ting nok er det
+  som bliver brugt i praksis, et CDN man selv har kontrol over som virksomhed.
+</p>
+
+<h2 id="Memory-og-efficiency">
+  Understands how code and its placement affects application memory and
+  efficiency.
+</h2>
+<p>Hvis man kigger på min pages.js kan man f.eks. se</p>
+<pre><code>
+const serverSideRendering = readPage(
+  "public/pages/07_serverSideRendering/07_serverSideRendering.html",
+);
+
+export const frontpagePage = constructPage(frontpage, {
+  tabTitle: "Frontpage",
+});
+  </code></pre>
+<p style="margin-bottom: 5rem">
+  Begge de her kald ligger på top-level og bliver kaldt ved serverstart når Node
+  læser alle HTML filerne og bygger de færdige sider, så tingene altså er
+  renderet på serveren. Det gør at hver request er hurtig fordi clienten ikke
+  skal rendere siden selv, til gengæld så ligger siderne i hukommelsen og
+  fylder, det betyder ikke noget med de få antal sider jeg har, men det kunne
+  godt betyde noget hvis man havde utroligt mange. <br />
+  Indholdet er i princippet også "frosset" efter server opstart, dvs. at
+  serveren ikke ser ændriger i f.eks. HTML filer før serveren genstarter, det er
+  derfor vi inkluderede f.eks. HTML i nodemon.json så den holder øje med
+  ændringer i bl.a. HTML filer også.
+</p>
+
+<h2 id="Sync vs async">
+  Understands how synchronous and asynchronous code affects code execution when
+  reading files.
+</h2>
+<p>
+  Node kører i 1 tråd. Det betyder at Node kun kan køre 1 ting af gangen i en
+  ens kode. Det knode snippet hernede under er synkront, som betyder at Node
+  ikke kan gøre andet indtil Den givne kode er færdig, i dette eksempel skal den
+  læse filen færdigt. Kode fra templatingEngine.js
+</p>
+<pre><code>
+export function readPage(path) {
+  return fs.readFileSync(path, "utf-8");
+}
+</code></pre>
+<p>
+  Hvis det er asynkront så kan den godt lave andre ting imens, indtil der kommer
+  enten et callback eller et promise fra den asynkrone kode, alt efter hvordan
+  du har skrevet koden. <br />
+  Jeg kommer her med et eksempel på asynkron vs synkron.
+</p>
+<pre><code>
+console.log("1");
+fs.readFile("fil.txt", "utf-8", (err, data) => console.log("2"));
+console.log("3");
+</code></pre>
+<p style="margin-bottom: 5rem">
+  Hvis det er med readFile så bliver det 1, 3, 2. <br />
+  Hvis det er med readFileSync så bliver det 1, 2, 3.
+</p>
+
+<h2 id="SSR-vs-CSR">
+  Understands the arguments for and against SSR vs. CSR when it comes to:
+</h2>
+
+<h3>Load Time</h3>
+<ul>
+  <li>
+    SSR:
+    <br />Brugeren for færdig HTML, så inholdet kan vises med det samme
+    <br />Dog kan det også blive tungt for serveren hvis du har SSR på requests,
+    <br />men vores bliver renderet 1 gang på server opstart
+  </li>
+  <br />
+  <li>
+    CSR:
+    <br />Brugeren skal 'load' alt js selv og bygge siderne op selv. <br />
+    Det er til gengæld lettere på vores server.
+  </li>
+</ul>
+
+<h3>Resources spent (duration, when and where)</h3>
+<ul>
+  <li>
+    SSR:
+    <br />Duration - Kommer an på om du har SSR per request eller server
+    opstart. <br />When - Per request eller ved server opstart <br />
+    Where - På serveren
+  </li>
+  <br />
+  <li>
+    CSR: <br />Duration - Kommer an på brugerens computer <br />When - Ved hver
+    ny request <br />Where - Brugerens browser
+  </li>
+</ul>
+
+<h3>SEO</h3>
+<p>
+  Crawleren er ligesom en bruger, i den forstand at hvis vi har SSR, så slipper
+  crawleren for at skulle hente filer og JS selv, og får bare indholdet færdigt.
+  Det er bedst practice at køre SSR, ifølge google. <br />
+  Deres egen crawler er rimelig skarp og kan godt klare CSR hjemmesider, men det
+  er ikke alle søgemaskinerns crawlers der er lige så stærke som googles.
+</p>
+
+<h3>CORS</h3>
+<p style="margin-bottom: 5rem">
+  Du kommer udenom CORS problerme ved at bruge SSR direkte eller ved at bruge en
+  proxy i din CSR app, som så vidt jeg kunne google mig til alligevel bare
+  bruger din egen server som en proxy, så den efterligner SSR.
+</p>
+
+<h2 id="Code-structure">
+  Can argue for better ways to structure the code and how to avoid files that
+  are too long.
+</h2>
+<p>
+  Det er svært at overskue hvis alting ligger i en stor fil og/eller mappe. Det
+  giver derfor bedre mening at dele tingene op, og det kan der være flere
+  forskellige måder at gøre på, det kunne f.eks. være Separation of Concerns,
+  naming conventions, KISS, DRY, single responsibility, readability. Det handler
+  alt i alt om at gøre din kode lettere at forstå og gennemgå. Det er især noget
+  de går op i ude på mit arbejde, fordi man næsten 100% kan regne med at der
+  også er nogle andre der enten skal bruge din kode, eller skal kigge det
+  igennem og måske ændre på det senere.
+</p>

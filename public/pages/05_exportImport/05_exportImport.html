@@ -1,0 +1,70 @@
+<h1>05. Export / Import</h1>
+
+<h2 id="Serve-static-files">
+  Understands the security need to serve static files and can do it in Express.
+</h2>
+<p>
+  Det handler om at definere hvilke filer i en projekt som brugeren har adgang
+  til. Altså hvilke filer de kan request. Alt der ligger i public er.. public!
+  No Way! Så kan folk ikke få fat i vores backend kode, env filer osv. osv.
+  <br />Her er express koden til det
+</p>
+<pre style="margin-bottom: 5rem"><code>
+import express from "express";
+
+const app = express();
+
+app.use(express.static("public"));
+</code></pre>
+
+<h2 id="CS-vs-SS-files">
+  Can point out which files are client files and which are server files.
+</h2>
+<p>
+  Tænker umiddelbart det er client -> public og alt andet server filer, men
+  vores pages er jo SSR med ligger i public, tænker at man burde kunne flytte
+  dem ud i princippet. Tænker mere sikkert at sige at hvis filen bruger node,
+  express eller lignende moduler så er det en server fil. <br />
+  Min escapeHTML ligger også i public, det er nok ikke bedst practice haha.
+</p>
+
+<h2 id="Import-/-Export-HTML">
+  Can work with both types of import/export in HTML.
+</h2>
+<p>Tænker du mener default vs named, som man kan nedenunder her:</p>
+<pre style="margin-bottom: 5rem"><code>
+// Named
+export function sanitizeXSS(X) {Y}
+
+// Default
+export default function sanitizeXSS(X) {Y}
+
+
+// Named
+import { sanitizeXSS } from "./escapeHTML.js";
+
+// Default
+import sanitizeXSS from "./escapeHTML.js";
+</code></pre>
+
+<h2 id="CommonJS-/-ES-Modules">
+  Can import/export in both ways in Node.js (CommonJS and ES Modules). Knows the
+  pros of using ES Modules.
+</h2>
+<pre><code>
+  //CommonJS
+  function sanitizeXSS(X) {Y}
+  module.exports = {sanitizeXSS}
+  
+  const { sanitizeXSS } = require("./public/assets/js/escapeHTML.js")
+
+  //ES Modules med "type": "module" i package.json
+  export function sanitizeXSS(X) {Y}
+
+  import { sanitizeXSS } from "./public/assets/js/escapeHTML.js"
+</code></pre>
+<p>
+  ES modules er dejlig smart fordi man f.eks. bare kan gå ind i package.json og
+  tilføje den "type": "module", så er en god del af det allerede klaret.
+  Derudover mener jeg også at modules er asynkron hvorimod require er synkron
+</p>

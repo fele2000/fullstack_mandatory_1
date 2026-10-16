@@ -1,0 +1,21 @@
+{
+  "name": "mandatory",
+  "version": "0.0.1",
+  "description": "a website to drain my soul",
+  "license": "MIT",
+  "author": "Felix Llambias",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env PORT=80 node app.js",
+    "start-dev": "cross-env PORT=9090 nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "highlight.js": "^11.12.0"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "nodemon": "^3.1.14"
+  }
+}
