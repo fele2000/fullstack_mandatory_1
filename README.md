@@ -1,0 +1,20 @@
+# Fullstack Mandatory 1
+
+Et lille undervisningsprojekt, der viser grundlæggende emner inden for webudvikling med Node.js og Express. Webstedet indeholder sider om blandt andet servere, løkker, HTML, import og eksport samt server-side rendering.
+
+## Kom godt i gang
+
+1. Sørg for, at Node.js er installeret.
+2. Installer projektets afhængigheder:
+
+   ```sh
+   npm install
+   ```
+
+3. Start udviklingsserveren:
+
+   ```sh
+   npm run start-dev
+   ```
+
+4. Åbn [http://localhost:9090](http://localhost:9090) i din browser.
